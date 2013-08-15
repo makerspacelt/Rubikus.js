@@ -1,4 +1,1 @@
-Rubikus.js
-==========
-
-Draw makerspace logo as a visualization of a hash using HTML5 Canvas
+**Rubikus.js** is a JavaScript module for drawing the Makerspace logo using HTML5 Canvas. Future versions will have to include SVG path exports as well.
