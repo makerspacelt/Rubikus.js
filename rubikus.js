@@ -94,9 +94,12 @@
                 setHash: function (newHash) {
                     settings.hash = newHash;
                     hash = settings.hash.split('');
+
+                    utils.resetHue();
                 },
 
                 resetHue: function () {
+                    hue = undefined;
                     for (var i = hash.length - 1; i >= 0; i -= 1) {
                         hue = hue ^ hash[i];
                     }
@@ -108,6 +111,8 @@
                         'hsla(' + (hue + 20) + ', 75%, 50%, 1)',
                         'hsla(' + (hue - 20) + ', 75%, 50%, 1)'
                     ];
+
+                    drawAllCubes();
                 },
 
                 chooseColour: function (bin) {
@@ -123,27 +128,36 @@
             },
 
             drawAllCubes = function () {
-                var ctx = settings.canvas.getContext('2d');
+                var canvas = settings.canvas,
+                    ctx = canvas.getContext('2d'),
+                    height = canvas.offsetHeight,
+                    width = canvas.offsetWidth;
 
-                ctx.clearRect(0, 0, settings.canvas.offsetWidth, settings.canvas.offsetHeight);
+                ctx.clearRect(0, 0, width, height);
 
                 for (var i = 0; i < hash.length; i += 1) {
                     utils.drawSingleCube(i);
                 }
+
+                ctx.fillStyle = '#f0f';
+                ctx.font = 'bold ' + settings.canvas.offsetWidth / 2 + 'px jubilat';
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.fillText('M', Math.floor(width / 3.703703704), Math.floor(height / 1.547085202));
+                ctx.globalCompositeOperation = 'source-over';
             },
 
             init = function (opts) {
                 utils.extend(settings, opts);
-                utils.setHash(settings.hash);
-                utils.resetHue();
 
                 cache.width = Math.floor(settings.canvas.offsetWidth / 4);
                 cache.height = Math.floor(cache.width / Math.sqrt(3));
 
-                drawAllCubes();
+                settings.canvas.setAttribute('height', Math.floor(settings.canvas.offsetWidth * 1.15));
+
+                utils.setHash(settings.hash);
             };
 
-        this.redraw = drawAllCubes;
+        this.setHash = utils.setHash;
 
         init(userOpts);
     };
