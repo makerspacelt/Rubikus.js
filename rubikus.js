@@ -3,7 +3,7 @@
  *
  * Copyright 2013, Karolis Grinkus - http://kartais.lt
  *
- * Github: http://github.com/
+ * Github: https://github.com/makerspacelt/Rubikus.js
  */
 
 (function (undefined) {
