@@ -13,8 +13,10 @@
                 canvas: null,
                 hash: '358ed264d3b8a832b86bc4db745f182ef71bc65fd0a62dd5d760862fe1c3986b' // makerspace
             },
-            hash,
             cache = {},
+            colours,
+            hash,
+            hue,
             utils = {
                 extend: function (destination, source) {
                     for (var property in source) {
@@ -54,9 +56,9 @@
                         midY = 4 * cache.height + halfY * (x + y) - cache.height * z,
                         ctx = settings.canvas.getContext('2d'),
                         colour = {
-                            top: '#ff0',
-                            left: '#0ff',
-                            right: '#f0f'
+                            top: colours[0],
+                            left: colours[1],
+                            right: colours[2]
                         };
 
                     if ((hex < 2) || (hex > 11)) {
@@ -91,6 +93,10 @@
             },
 
             drawAllCubes = function () {
+                var ctx = settings.canvas.getContext('2d');
+
+                ctx.clearRect(0, 0, settings.canvas.offsetWidth, settings.canvas.offsetHeight);
+
                 for (var i = 0; i < hash.length; i += 1) {
                     utils.drawSingleCube(i);
                 }
@@ -103,8 +109,22 @@
                 cache.width = Math.floor(settings.canvas.offsetWidth / 4);
                 cache.height = Math.floor(cache.width / Math.sqrt(3));
 
+                for (var i = hash.length - 1; i >= 0; i -= 1) {
+                    hue = hue ^ hash[i];
+                }
+
+                hue = hue * 22.5 - 90;
+
+                colours = [
+                    'hsla(' + hue + ', 75%, 50%, 1)',
+                    'hsla(' + (hue + 20) + ', 75%, 50%, 1)',
+                    'hsla(' + (hue - 20) + ', 75%, 50%, 1)'
+                ];
+
                 drawAllCubes();
             };
+
+        this.redraw = drawAllCubes;
 
         init(userOpts);
     };
