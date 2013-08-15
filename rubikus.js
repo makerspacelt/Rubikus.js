@@ -56,9 +56,9 @@
                         midY = 4 * cache.height + halfY * (x + y) - cache.height * z,
                         ctx = settings.canvas.getContext('2d'),
                         colour = {
-                            top: colours[0],
-                            left: colours[1],
-                            right: colours[2]
+                            top: colours[utils.chooseColour(bin.substr(0, 2))],
+                            left: colours[utils.chooseColour(bin.substr(1, 2))],
+                            right: colours[utils.chooseColour(bin.substr(2, 2))]
                         };
 
                     if ((hex < 2) || (hex > 11)) {
@@ -108,6 +108,17 @@
                         'hsla(' + (hue + 20) + ', 75%, 50%, 1)',
                         'hsla(' + (hue - 20) + ', 75%, 50%, 1)'
                     ];
+                },
+
+                chooseColour: function (bin) {
+                    var dec = parseInt(bin, 2);
+
+                    if (dec === 0) {
+                        return 0;
+                    } else if (dec === 3) {
+                        return 2;
+                    }
+                    return 1;
                 }
             },
 
