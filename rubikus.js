@@ -11,7 +11,7 @@
     var Rubikus = Rubikus || function (userOpts) {
         var settings = {
                 canvas: null,
-                hash: '358ed264d3b8a832b86bc4db745f182ef71bc65fd0a62dd5d760862fe1c3986b' // makerspace
+                hash: '358ed264d3b8a832b86bc4db745f182ef71bc65fd0a62dd5d760862fe1c3986b' // 'makerspace' in SHA256
             },
             cache = {},
             colours,
@@ -124,6 +124,10 @@
                         return 2;
                     }
                     return 1;
+                },
+
+                output: function () {
+                    return settings.canvas.toDataURL("image/png");
                 }
             },
 
@@ -158,6 +162,7 @@
             };
 
         this.setHash = utils.setHash;
+        this.output = utils.output;
 
         init(userOpts);
     };
