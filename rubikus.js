@@ -89,6 +89,25 @@
                         ctx.fill();
                         ctx.lineWidth = 1; ctx.strokeStyle = colour.right; ctx.closePath(); ctx.stroke();
                     }
+                },
+
+                setHash: function (newHash) {
+                    settings.hash = newHash;
+                    hash = settings.hash.split('');
+                },
+
+                resetHue: function () {
+                    for (var i = hash.length - 1; i >= 0; i -= 1) {
+                        hue = hue ^ hash[i];
+                    }
+
+                    hue = hue * 22.5 - 90;
+
+                    colours = [
+                        'hsla(' + hue + ', 75%, 50%, 1)',
+                        'hsla(' + (hue + 20) + ', 75%, 50%, 1)',
+                        'hsla(' + (hue - 20) + ', 75%, 50%, 1)'
+                    ];
                 }
             },
 
@@ -104,22 +123,11 @@
 
             init = function (opts) {
                 utils.extend(settings, opts);
+                utils.setHash(settings.hash);
+                utils.resetHue();
 
-                hash = settings.hash.split('');
                 cache.width = Math.floor(settings.canvas.offsetWidth / 4);
                 cache.height = Math.floor(cache.width / Math.sqrt(3));
-
-                for (var i = hash.length - 1; i >= 0; i -= 1) {
-                    hue = hue ^ hash[i];
-                }
-
-                hue = hue * 22.5 - 90;
-
-                colours = [
-                    'hsla(' + hue + ', 75%, 50%, 1)',
-                    'hsla(' + (hue + 20) + ', 75%, 50%, 1)',
-                    'hsla(' + (hue - 20) + ', 75%, 50%, 1)'
-                ];
 
                 drawAllCubes();
             };
