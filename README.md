@@ -7,10 +7,10 @@ Currently, the component supports only hashes that are 256 bits wide. We use [cr
 ## Usage
 
 ```javascript
-new Rubikus({
+var rubikus = new Rubikus({
     canvas: document.getElementById('makerspace-logotype'),
     hash: CryptoJS.SHA256('Your string').toString()
-})
+});
 ```
 
 ## Methods
