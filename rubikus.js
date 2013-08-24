@@ -145,7 +145,6 @@
 
                 ctx.fillStyle = '#fff';
                 ctx.font = 'bold ' + settings.canvas.offsetWidth / 2 + 'px jubilat';
-                ctx.globalCompositeOperation = 'destination-out';
                 ctx.fillText('M', Math.floor(width / 3.703703704), Math.floor(height / 1.547085202));
                 ctx.globalCompositeOperation = 'source-over';
             },
