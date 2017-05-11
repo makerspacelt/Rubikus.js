@@ -1,11 +1,8 @@
 (function () {
-    try {
-        Typekit.load({
-            active: function () {
-                init();
-            }
-        });
-    } catch(e) {}
+
+    window.onload = function() {
+        init();
+    };
 
     var output = function (elem) {
             var image,
@@ -43,3 +40,4 @@
             };
         }
 })()
+
